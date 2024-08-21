@@ -1,0 +1,48 @@
+{% block title %}API Dashboard{% endblock %}
+
+{% block content %}
+        <h1>Create a New API</h1>
+        
+        <form method="POST" action="{{ url_for('main.new_api') }}">
+            {{ form.hidden_tag() }}
+            
+            <div class="form-group">
+                {{ form.name.label(class="form-label") }}
+                {{ form.name(class="form-control") }}
+                {% for error in form.name.errors %}
+                    <div class="form-error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.endpoint.label(class="form-label") }}
+                {{ form.endpoint(class="form-control") }}
+                {% for error in form.endpoint.errors %}
+                    <div class="form-error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.method.label(class="form-label") }}
+                {{ form.method(class="form-control") }}
+                {% for error in form.method.errors %}
+                    <div class="form-error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.description.label(class="form-label") }}
+                {{ form.description(class="form-control") }}
+                {% for error in form.description.errors %}
+                    <div class="form-error">{{ error }}</div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+        
+        <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Back to API List</a>
+
+{%endblock%}

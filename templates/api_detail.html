@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Detail</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>API Detail</h1>
+        <h2>{{ api.name }}</h2>
+        <p>{{ api.description }}</p>
+
+        <form method="POST" action="{{ url_for('main.api_detail', api_id=api.id) }}" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                {{ form.request_method.label(class="form-label") }}
+                {{ form.request_method(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.body_type.label(class="form-label") }}
+                {{ form.body_type(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.headers.label(class="form-label") }}
+                {{ form.headers(class="form-control") }}
+                <small>Enter headers as key=value pairs, one per line</small>
+            </div>
+
+            <div class="form-group" id="json-payload">
+                {{ form.request_payload.label(class="form-label") }}
+                {{ form.request_payload(class="form-control") }}
+            </div>
+
+            <div class="form-group" id="form-data">
+                {{ form.form_data.label(class="form-label") }}
+                {{ form.form_data(class="form-control") }}
+            </div>
+
+            <div class="form-group" id="file-upload">
+                {{ form.file_upload.label(class="form-label") }}
+                {{ form.file_upload(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+
+        {% if response %}
+            <h3>Response</h3>
+            <pre>{{ response.text }}</pre>
+        {% endif %}
+        
+        <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Back to API List</a>
+    </div>
+
+    <script>
+        const bodyTypeField = document.getElementById('body_type');
+        const jsonPayloadField = document.getElementById('json-payload');
+        const formDataField = document.getElementById('form-data');
+        const fileUploadField = document.getElementById('file-upload');
+
+        function updateFields() {
+            const bodyType = bodyTypeField.value;
+            jsonPayloadField.style.display = bodyType === 'json' ? 'block' : 'none';
+            formDataField.style.display = bodyType === 'form' ? 'block' : 'none';
+            fileUploadField.style.display = bodyType === 'file' ? 'block' : 'none';
+        }
+
+        bodyTypeField.addEventListener('change', updateFields);
+        window.onload = updateFields;
+    </script>
+</body>
+</html>
