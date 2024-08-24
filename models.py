@@ -9,7 +9,7 @@ class BaseModel(Model):
         database = db
 
 class User(BaseModel):
-    username = CharField(unique=True)
+    username = CharField(primary_key=True,unique=True)
     password_hash = CharField()
     is_active=BooleanField(default=True)
     def set_password(self, password):

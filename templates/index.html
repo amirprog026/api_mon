@@ -3,7 +3,7 @@
 {% block title %}API Dashboard{% endblock %}
 
 {% block content %}
-<h1>Welcome, {{ session['username'] }}</h1>
+<h1>Welcome, {{ current_user.username }}</h1>
 <a href="{{ url_for('main.new_api') }}">Create New API</a>
 <table>
     <tr>
@@ -18,14 +18,8 @@
         <td>{{ api.name }}</td>
         <td>{{ api.endpoint }}</td>
         <td>{{ api.method }}</td>
-        <td>
-            header:<textarea id="w3review" name="w3review" rows="4" cols="50">
-                {'Content-Type': 'application/json'}
-                </textarea>
-                
-                
-                
-                <a href="">Send Request</a>
+        <td>            
+                <a href="/api/{{ api.id }}">Send Request</a>
             <form action="" method="post" style="display:inline;">
                 <button type="submit">Delete</button>
             </form>

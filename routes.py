@@ -19,8 +19,9 @@ def index():
 def api_detail(api_id):
     api = API.get_or_none(API.ID == api_id)
     
-    if not api or api.user != current_user.id:
+    if not api or api.user.username != current_user.id:
         flash("API not found or you don't have permission to access it", "error")
+        print(f'API not found or you dont have permission to access it {current_user.id}')
         return redirect(url_for('main.index'))
 
     form = APIRequestForm()
